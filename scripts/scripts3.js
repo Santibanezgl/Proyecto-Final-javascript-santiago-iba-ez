@@ -30,112 +30,94 @@ validarLoginJs3 (obtenerDelLs("login"))
 })
 
 
+/* cards rick y morty */
 const cards = (array) => {
     const nodosDom = array.reduce ((acc, element) => {
 return acc + `
-<div class="card text-center">
-<div class="container-img">
+<div class="card text-center fondoNegro" id="personaje-${element.id}">
+<div class="container-img fondoNegro">
 <img id="corazon" src=${element.image} alt=${element.name} 
 </div>   
-<h2>
+<h2 class="white">
 Nombre: ${element.name}
 </h2>
-<h3> 
+<h3 class="white"> 
 Status: ${element.status}
 </h3>
-<h3>Fecha de creacion: ${element.created}</h3>
-<h3> ¿Guardar este personaje en favoritos?</h3> 
-<h3 class="corazones">♡</h3>
+<h3 class="white">Fecha de creacion: ${element.created}</h3>
+<h3 class="white"> ¿Guardar este personaje en favoritos?</h3> 
+<button id="boton"> ♡ </button>
 </div>
 `
     },"")
-    document.querySelector(".containerr").innerHTML = nodosDom
+   document.querySelector(".containerr").innerHTML = nodosDom
+
 }
 
+/* fetch + swal + like */
 const personajes = async () => {
     const response = await fetch("https://rickandmortyapi.com/api/character")
     const data = await response.json()
     cards(data.results)
+    const Like = document.querySelectorAll("#boton")
+    Like.forEach(elemento=> {
+        elemento.onclick = () => {
+            elemento.style.color ="red";
+            swal("¡Felicitaciones likeaste un personaje!","Podes visualizarlo desde el apartado favoritos")
+        }
+    })
+
+    const modoOscuro = document.querySelector("#Oscuro")
+    const modoClaro = document.querySelector("#Claro")
+    const letras = document.querySelectorAll(".white")
+    const fondoNegro = document.querySelectorAll(".fondoNegro")
+
+
+    modoOscuro.onclick = () => {
+        infoAlLs("modoOscuro" , "activo")
+        if (obtenerDelLs("modoOscuro", "activo" )) {
+            letras.forEach(elementos => {
+                elementos.style.color ="white";
+            })
+            fondoNegro.forEach(elementos => {
+                elementos.style.backgroundColor = "black";
+            })
+        }
+    }
+
+ 
+modoClaro.onclick = () => {
+    infoAlLs("modoOscuro" , "desactivado") 
+    if (obtenerDelLs("modoOscuro", "desactivado")) {
+        letras.forEach(elementos => {
+            elementos.style.color ="black";
+        })
+        fondoNegro.forEach(elementos => {
+            elementos.style.backgroundColor = "white";
+        })
+    }
+}
+
+ const validar = (valor) =>{
+    if (valor === "activo" ) {
+        letras.forEach(elementos => {
+            elementos.style.color ="white";
+        })
+        fondoNegro.forEach(elementos => {
+            elementos.style.backgroundColor = "black";
+        })
+    } else if (valor === "desactivado") {
+        letras.forEach(elementos => {
+            elementos.style.color ="black";
+        })
+        fondoNegro.forEach(elementos => {
+            elementos.style.backgroundColor = "white";
+        })
+    }
+ }
+ 
+ validar(obtenerDelLs("modoOscuro"))
 }
 
 personajes ()
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*window.addEventListener('load', obtenerDatos);
-
-function obtenerDatos () {
-    const Nasa_api = 'nmE4rvQ8YLQXirf6MJiRmExSe9QfQInO06yiOho0';
-    const ruta = `https://api.nasa.gov/planetary/apod?api_key=${Nasa_api}`;
-
-    fetch(ruta)
-    .then (respuesta => respuesta.json())
-    .then (resultado => mostrarDatos(resultado))
-}
-function mostrarDatos ({date, explanation, media_type, title, url}){
-    const titulo = document.querySelector("#titulo")
-    titulo.innerHTML = title;
-    const fecha = document.querySelector("#fecha")
-    fecha.innerHTML = date
-    const descripcion = document.querySelector("#descripcion")
-    descripcion.innerHTML = explanation;
-    const multimedia = document.querySelector("#c_multimedia")
-    if (media_type == 'video'){
-        multimedia.innerHTML = `<iframe class="embed-responsive-item" src="${url}"></iframe>`
-    } else {
-        multimedia.innerHTML = `<img src="${url}" class="img-fluid" alt="${url}"></img>`
-    }
-} */
- 
-
-
-
-
-/*function datosAsteroides () {
-    const Nasa_apii = 'nmE4rvQ8YLQXirf6MJiRmExSe9QfQInO06yiOho0';
-    const ruta2 = `https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=${Nasa_apii}`;
-    fetch(ruta2)
-    .then (respuesta => respuesta.json())
-    .then (resultado => mostrarDatoss(resultado))
-}
-
-function mostrarDatoss ({name, img_src, landing_date, status, earth_date}){
-    const titulo2 = document.querySelector("titulo2")
-    titulo2.innerHTML = name;
-    const imagen = document.querySelector("imagen")
-    imagen.innerHTML = img_src
-    const landingDate = document.querySelector("landing_date")
-    landingDate.innerHTML = landing_date
-    const comoes = document.querySelector("comoes")
-    comoes.innerHTML = status
-    const earthDate = document.querySelector("earth_date")
-    earthDate.innerHTML = earth_date
-}
-
-console.log (mostrarDatoss) */

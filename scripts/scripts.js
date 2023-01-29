@@ -57,7 +57,54 @@ cerrarSesion.addEventListener("click", () => {
     localStorage.removeItem("login")
     window.location.href = "iniciarsesion.html";
 })
+/* modo oscuro  */
+const modoOscuro = document.querySelector("#Oscuro")
+    const modoClaro = document.querySelector("#Claro")
+    const letras = document.querySelectorAll(".whiteiniciosesion")
+    const fondoNegro = document.querySelectorAll(".fondoNegroiniciosesion")
 
 
+    modoOscuro.onclick = () => {
+        infoAlLs("modoOscuro" , "activo")
+        if (obtenerDelLs("modoOscuro", "activo" )) {
+           letras.forEach(elementos => {
+            elementos.style.color ="white";
+           })
+           fondoNegro.forEach(elements => {
+            elements.style.backgroundColor = "black";
+           })
+        }
+    }
 
+    modoClaro.onclick = () => {
+        infoAlLs("modoOscuro" , "desactivado")
+        if (obtenerDelLs("modoOscuro", "desactivado" )) {
+            letras.forEach(elementos => {
+                elementos.style.color ="black";
+               })
+               fondoNegro.forEach(elements => {
+                elements.style.backgroundColor = "white";
+               })
+        }
+    }
 
+    const validar = (valor) =>{
+        if (valor === "activo" ) {
+            letras.forEach(elementos => {
+                elementos.style.color ="white";
+            })
+            fondoNegro.forEach(elementos => {
+                elementos.style.backgroundColor = "black";
+            })
+        } else if (valor === "desactivado") {
+            letras.forEach(elementos => {
+                elementos.style.color ="black";
+            })
+            fondoNegro.forEach(elementos => {
+                elementos.style.backgroundColor = "white";
+            })
+        }
+     }
+     
+     validar(obtenerDelLs("modoOscuro"))
+    
